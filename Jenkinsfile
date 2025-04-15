@@ -1,12 +1,18 @@
 pipeline {
-  agent any
+    agent any
 
-  stages {
-    stage('Run in Docker') {
-      steps {
-        bat 'docker pull node:16-alpine'
-        bat 'docker run --rm node:16-alpine node --version'
-      }
+    stages {
+        stage('Pull & Run Custom Docker Image') {
+            steps {
+                bat 'docker pull akgreninja/node-custom:16-alpine'
+                bat 'docker run --rm akgreninja/node-custom:16-alpine node --version'
+            }
+        }
     }
-  }
+
+    post {
+        always {
+            echo 'Pipeline finished.'
+        }
+    }
 }
